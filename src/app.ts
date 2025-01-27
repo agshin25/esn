@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express"
 import "reflect-metadata"
+import "./config/database"
 import config from "./config"
 import router from "./routers"
 
