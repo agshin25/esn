@@ -1,12 +1,14 @@
 import { DataSource } from "typeorm";
 import config from ".";
+import { join } from "node:path";
+
 
 const dataSource = new DataSource({
     type: "postgres",
     url: config.databaseUrl,
     synchronize: true,
     logging: true,
-    entities: []
+    entities: [join(__dirname, "../models/*.entity.{ts, js}")]
 
 })
 
