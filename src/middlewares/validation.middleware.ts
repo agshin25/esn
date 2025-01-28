@@ -6,7 +6,6 @@ export const validationMiddleware = (
   type: "body" | "query" | "params" = "body"
 ) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    console.log(schema, type);
     const { success, data, error } = schema.safeParse(req[type]);
 
     if (success) {
