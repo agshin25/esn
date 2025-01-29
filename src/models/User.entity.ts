@@ -14,12 +14,12 @@ export class User extends BaseEntity {
   id: number;
 
   @Column()
-  username: string;
+  email: string;
 
   @Column()
   password: string;
 
-  @Column()
+  @Column({ default: role.STANDART })
   role: role = role.STANDART;
 
   @CreateDateColumn()

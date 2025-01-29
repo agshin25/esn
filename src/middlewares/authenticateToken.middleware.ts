@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import config from "../config";
-
-const JWT_SECRET = config.jwtSecret;
+import { compare } from "../utils/jwt.utils";
 
 declare global {
   namespace Express {
@@ -18,7 +16,6 @@ export const authenticateToken = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req.headers);
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
@@ -26,7 +23,7 @@ export const authenticateToken = (
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = compare(token);
     req.user = decoded; // attach user info to req
     next();
   } catch (e) {
