@@ -5,6 +5,7 @@ import { User } from "../models/User.entity";
 import { registerDTO } from "../types/user";
 import { AppError, NotFoundError } from "../utils/error.utils";
 import { encode } from "../utils/jwt.utils";
+import { sendMail, WELCOME_TEMPLATE } from "../utils/mailer.utils";
 
 const userRepo = dataSource.getRepository(User);
 
@@ -20,6 +21,12 @@ const register = async ({ email, password }: registerDTO) => {
     email,
     password: hashedPassword,
   });
+
+  // await sendMail({
+  //   email: user.email,
+  //   subject: "Welcome to ESN",
+  //   template: WELCOME_TEMPLATE,
+  // });
 
   return user;
 };
