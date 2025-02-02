@@ -9,11 +9,14 @@ const app  = express()
 
 app.use(express.json())
 
+
 app.use("/api", router)
 
 app.get("/" , (req: Request, res: Response) => {
     res.json({message: "The app is running"})
 })
+
+
 
 app.use(errorMiddleware)
 

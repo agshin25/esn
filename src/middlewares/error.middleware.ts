@@ -7,5 +7,5 @@ export const errorMiddleware = (err: AppError | Error, req: Request, res: Respon
         res.status(err.statusCode).json({error: err.message})
     }
 
-    res.status(500).json({error: "Interval server error"})
+    res.status(500).json({error: "Interval seerver error"})
 }
