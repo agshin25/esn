@@ -11,20 +11,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-<<<<<<< HEAD
+    "@types/jsonwebtoken": "^9.0.8",
     "@types/multer": "^1.4.12",
     "cloudinary": "^1.41.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "multer": "^1.4.5-lts.1",
-=======
-    "@types/nodemailer": "^6.4.17",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "nodemailer": "^6.10.0",
->>>>>>> 58919d86cfac24af55a9d9f89eabc910b79f85b2
     "pg": "^8.13.1",
     "postgres": "^3.4.5",
     "reflect-metadata": "^0.2.2",
@@ -33,7 +26,7 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/node": "^22.10.10",
+    "@types/node": "^22.13.0",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2"
   }

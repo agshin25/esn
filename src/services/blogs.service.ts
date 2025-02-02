@@ -2,7 +2,7 @@ import dataSource from "../config/database"
 import { BlogEntity } from "../models/blog.entity"
 import { Image } from "../models/image.entity"
 import { CreateBlogDto } from "../types/blog"
-import { AppError } from "../utils/error.utils";
+import { AppError, NotFoundError } from "../utils/error.utils";
 import imageServices from "./image.service";
 
 
@@ -16,6 +16,18 @@ const getBlogs = () => BlogEntity.find({
         },
         createdAt: false
     }    
+})
+
+const getBlog = (id: number) => BlogEntity.findOne({
+    where: {id},
+    select: {
+        id: false,
+        images: {
+            url: true,
+            id: false
+        },
+        createdAt: false
+    }
 })
 
 const create = async (filePaths: string[], params: CreateBlogDto) => {
@@ -46,9 +58,34 @@ const create = async (filePaths: string[], params: CreateBlogDto) => {
     return blog;
 }
 
+const update = async (id: number ,params: any) => {
+    let blogRepo = dataSource.getRepository(BlogEntity)
+
+    let blog = await blogRepo.findOne({ where: { id } })
+
+    if (!blog) throw new NotFoundError("Blog does not exist")
+
+    await blogRepo.update(id, params)
+
+    return update
+}
+
+const deleteBlog = async (id: number) => {
+    let blog = await BlogEntity.findOne({where: {id}})
+
+    if(!blog) throw new NotFoundError("Blog does not exist")
+
+    await blog.remove()
+
+    return blog
+}
+
 const blogServices = {
     create,
-    getBlogs
+    getBlogs,
+    getBlog,
+    deleteBlog,
+    update
 }
 
 export default blogServices
