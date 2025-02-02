@@ -7,7 +7,7 @@ const create = z.object({
         .max(100, "Title cannot exceed 100 characters"),
     content: z
         .string()
-        .min(20, "Content must be at least 20 characters long")
+        .min(20, "Content must be at least 20 characters long"),
 })
 
 const blogValidations = {
