@@ -1,9 +1,10 @@
 import dataSource from "../config/database"
 import { BlogEntity } from "../models/blog.entity"
 import { Image } from "../models/image.entity"
-import { CreateBlogDto } from "../types/blog"
+import { CreateBlogDto, UpdateBlogDto } from "../types/blog"
 import { AppError, NotFoundError } from "../utils/error.utils";
 import imageServices from "./image.service";
+
 
 
 const getBlogs = () => BlogEntity.find({
@@ -58,13 +59,33 @@ const create = async (filePaths: string[], params: CreateBlogDto) => {
     return blog;
 }
 
-const update = async (id: number ,params: any) => {
+const update = async (id: number, filePaths: string[] ,params: UpdateBlogDto) => {
     let blogRepo = dataSource.getRepository(BlogEntity)
+    let imageRepo = dataSource.getRepository(Image)
+
 
     let blog = await blogRepo.findOne({ where: { id } })
 
     if (!blog) throw new NotFoundError("Blog does not exist")
 
+    const uploadPromises = filePaths.map(async (filePath) => {
+        const cloudinaryResult = await imageServices.uploadImageToCloudinary(filePath);
+        return cloudinaryResult.url
+    })
+
+    if (!uploadPromises) throw new AppError("Failed to upload one or more images", 400)
+    const imageUrls = await Promise.all(uploadPromises);
+
+
+    const imageEntities = imageUrls.map(url => {
+        const image = imageRepo.create({
+            url,
+            blog,
+        });
+        return imageRepo.save(image);
+    });
+
+    await Promise.all(imageEntities);
     await blogRepo.update(id, params)
 
     return update

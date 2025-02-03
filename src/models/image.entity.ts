@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, BaseEntity } from "typeorm";
 import { BlogEntity } from "./blog.entity";
 
 @Entity("images")
-export class Image {
+export class Image extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @Column()
     url: string;

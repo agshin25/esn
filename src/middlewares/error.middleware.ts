@@ -8,6 +8,7 @@ export const errorMiddleware = (err: AppError | Error, req: Request, res: Respon
         res.status(err.statusCode).json({error: err.message})
     }
 
+    console.log(err);
     res.status(500).json({error: "Interval seerver error"})
 }
 

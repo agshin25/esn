@@ -28,8 +28,18 @@ const uploadImageToCloudinary = async (req: Request , res: Response, next: NextF
     }
 }
 
+const deleteImg = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const response = await imageServices.deleteImg(+req.params.id)
+        res.status(200).json(response)
+    } catch (error) {
+        next(error)
+    }
+}
+
 const imageControllers = {
-    uploadImageToCloudinary
+    uploadImageToCloudinary,
+    deleteImg
 }
 
 export default imageControllers
