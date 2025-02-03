@@ -1,17 +1,22 @@
 import { z } from "zod";
 
-const create = z.object({
-    title: z
-        .string()
-        .min(5, "Title must be at least 5 characters long")
-        .max(100, "Title cannot exceed 100 characters"),
-    content: z
-        .string()
-        .min(20, "Content must be at least 20 characters long"),
-})
+export const create = z.object({
+    title: z.string().min(1, "Title is required").max(255, "Title must be less than 255 characters"),
+    content: z.string().min(1, "Content is required"),
+    slug: z.string().optional(),
+    authorName: z.string().min(1, "Author name is required").max(255, "Author name must be less than 255 characters").optional(),
+});
+
+export const update = z.object({
+    title: z.string().max(255, "Title must be less than 255 characters").optional(),
+    content: z.string().optional(),
+    slug: z.string().optional(), 
+    authorName: z.string().max(255, "Author name must be less than 255 characters").optional(),
+});
 
 const blogValidations = {
-    create
+    create,
+    update
 }
 
 export default blogValidations
