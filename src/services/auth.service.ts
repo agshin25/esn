@@ -44,7 +44,7 @@ const login = async ({ email, password }: registerDTO) => {
     throw new NotFoundError("Either password or username is incorrect");
   }
 
-  const token = encode({ user: user.id });
+  const token = encode({ id: user.id });
   return { token, user: { ...user, password: undefined } };
 };
 
@@ -55,6 +55,15 @@ const saveUser = async (user: registerDTO) => {
 const findUser = async (email: string) => {
   const user = await userRepo.findOne({
     where: { email },
+  });
+  return user;
+};
+
+export const findUserById = async (id: number) => {
+  console.log("Hello World");
+  const user = await userRepo.findOne({
+    where: { id },
+    relations: ["bookings"],
   });
   return user;
 };
