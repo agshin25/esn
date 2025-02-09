@@ -27,4 +27,5 @@ export const sendMail = async ({ email, subject, template }: MailOptions) => {
 };
 
 /* TEMPLATES */
-export const WELCOME_TEMPLATE = `<p>[TEXT]</p>`;
+export const WELCOME_TEMPLATE = `<p>[WELCOME TEXT]</p>`;
+export const BOOKING_TEMPLATE = `<p>[BOOKING TEXT]</p>`;

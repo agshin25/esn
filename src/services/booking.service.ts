@@ -1,8 +1,8 @@
-import { urlencoded } from "express";
 import dataSource from "../config/database";
 import { Booking } from "../models/Booking.entity";
-import { AppError, NotFoundError } from "../utils/error.utils";
+import { NotFoundError } from "../utils/error.utils";
 import { findUserById } from "./auth.service";
+import { BOOKING_TEMPLATE, sendMail } from "../utils/mailer.utils";
 
 const bookingRepo = dataSource.getRepository(Booking);
 
@@ -15,6 +15,13 @@ const create = async (userId: number) => {
 
   const bk = bookingRepo.create();
   bk.user = user;
+
+  // await sendMail({
+  //   email: user.email,
+  //   subject: "Consulation was booked!",
+  //   template: BOOKING_TEMPLATE,
+  // });
+
   return await bookingRepo.save(bk);
 };
 
