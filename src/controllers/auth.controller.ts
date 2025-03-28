@@ -1,5 +1,6 @@
 import { Response, Request, NextFunction } from "express";
 import authService from "../services/auth.service";
+import { User } from "../models/User.entity";
 
 /* 
 register 

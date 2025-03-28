@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { role } from "../types/role";
 import { Booking } from "./Booking.entity";
+import { Meeting } from "./Meeting.entity";
 
 @Entity("user")
 export class User extends BaseEntity {
@@ -26,6 +27,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Booking, (booking) => booking.user)
   bookings: Booking[];
+
+  @OneToMany(() => Booking, (booking) => booking.user)
+  meetings: Meeting[];
 
   @CreateDateColumn()
   createdAt: Date;

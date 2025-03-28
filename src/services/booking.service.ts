@@ -3,18 +3,21 @@ import { Booking } from "../models/Booking.entity";
 import { NotFoundError } from "../utils/error.utils";
 import { findUserById } from "./auth.service";
 import { BOOKING_TEMPLATE, sendMail } from "../utils/mailer.utils";
+import { findMeetingById } from "./meeting.service";
 
 const bookingRepo = dataSource.getRepository(Booking);
 
-const create = async (userId: number) => {
+const create = async (userId: number, meetingId: number) => {
   const user = await findUserById(userId);
+  const meeting = await findMeetingById(meetingId);
 
-  if (!user) {
-    throw new NotFoundError("User was not found");
+  if (!user || !meeting) {
+    throw new NotFoundError("Either user or meeting was not found");
   }
 
   const bk = bookingRepo.create();
   bk.user = user;
+  bk.meeting = meeting;
 
   // await sendMail({
   //   email: user.email,
