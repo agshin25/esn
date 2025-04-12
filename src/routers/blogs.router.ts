@@ -8,8 +8,8 @@ const blogRouter = Router()
 
 blogRouter.get("/", blogControllers.getBlogs)
 blogRouter.get("/:id", blogControllers.getBlog)
-blogRouter.post("/create", upload.array("image", 5) , blogControllers.create)
-blogRouter.post("/update/:id", blogControllers.update)
+blogRouter.post("/create",validationMiddleware(blogValidations.create), upload.array("image", 5) , blogControllers.create)
+blogRouter.post("/update/:id", validationMiddleware(blogValidations.update), upload.array("image", 5), blogControllers.update)
 blogRouter.delete("/delete/:id", blogControllers.deleteBlog)
 
 export default blogRouter
